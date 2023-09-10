@@ -1,0 +1,246 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/output.css" rel="stylesheet" />
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.0/dist/cdn.min.js"></script>
+  <title>Deciso</title>
+  <style>
+   
+  </style>
+</head>
+
+<body>
+
+  <div class="bg-white">
+    <div class="px-4 py-16 mx-auto max-w-7xl sm:py-24 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-extrabold text-center text-gray-900">Let's Help you decide</h2>
+      <div class="mt-12" x-data="allTabs()" x-init="start_t_check()">
+
+        <div class="flex flex-col">
+          <div class="sm:hidden">
+            <label for="tabs" class="sr-only">Select a mode</label>
+            <select id="tabs" name="tabs" class="block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
+              <option hidden>Yes/No</option>
+
+              <option selected>Head/Tails</option>
+
+
+            </select>
+          </div>
+          <div class="hidden sm:block">
+            <nav class="relative z-0 flex divide-x divide-gray-200 rounded-lg shadow" aria-label="Tabs">
+              <a href="#" :class="currTab == 0 ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700'" class="hidden relative flex-1 min-w-0 px-4 py-4 overflow-hidden text-sm font-medium text-center bg-white rounded-l-lg group hover:bg-gray-50 focus:z-10" aria-current="page" @click="taber(0)">
+                <span>Yes/No</span>
+                <span aria-hidden="true" :class="currTab == 0 ? 'bg-indigo-500' : 'bg-transparent'" class=" transition-colors duration-500 absolute inset-x-0 bottom-0 h-0.5"></span>
+              </a>
+
+              <a href="#" :class="currTab == 1 ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700'" class="relative flex-1 min-w-0 px-4 py-4 overflow-hidden text-sm font-medium text-center text-gray-500 bg-white rounded-lg hover:text-gray-700 group hover:bg-gray-50 focus:z-10" aria-current="page" @click="taber(1)">
+                <span>Head/Tails</span>
+                <span aria-hidden="true" :class="currTab == 1 ? 'bg-indigo-500' : 'bg-transparent'" class=" transition-colors duration-500 absolute inset-x-0 bottom-0 h-0.5"></span>
+              </a>
+
+
+            </nav>
+          </div>
+          <div class="flex flex-col items-center justify-center relative min-h-[50px] bg-slate-50 m-2 rounded-md p-3">
+            <div class="flex w-full h-full" x-show="currTab==0">
+              <div class="flex items-center justify-center p-5 bg-green-500 rounded-full ">
+                <p class="text-3xl ">Go !</p>
+              </div>
+            </div>
+            <div class="flex items-center justify-center w-full h-full" x-show="currTab==1">
+              <span class="relative p-6 bg-blue-400 rounded-full h-fit" x-show="currHT==''" @click="runHT()" :class="animHT ? 'animate-spin':''">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="244" height="244" viewBox="0 0 256 256" xml:space="preserve">
+
+                  <defs>
+                  </defs>
+                  <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4222222222222314 1.4222222222222456) scale(2.84 2.84)">
+                    <path d="M 14.632 22.12 l -2.814 4.597 c -3.152 5.148 8.359 17.934 25.711 28.557 s 33.974 15.062 37.126 9.914 l 2.814 -4.597" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(232,197,55); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <ellipse cx="46.05" cy="41.358999999999995" rx="10.93" ry="36.839" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(247,211,62); fill-rule: nonzero; opacity: 1;" transform=" matrix(0.5221 -0.8529 0.8529 0.5221 -13.2651 59.036) " />
+                    <path d="M 58.27 43.468 c -3.391 -2.076 -6.746 -3.476 -9.422 -4.061 c -0.696 -1.955 -4.076 -5.128 -8.646 -7.925 c -5.722 -3.503 -11.13 -5.087 -12.079 -3.537 c -0.949 1.55 2.921 5.646 8.643 9.15 c 2.39 1.463 4.72 2.586 6.699 3.291 c -1.073 2.388 3.165 7.412 9.704 11.416 l 10.718 -4.166 C 62.336 46.222 60.427 44.789 58.27 43.468 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(232,197,55); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 10.138 37.73 c -1.094 4.683 -1.698 9.414 -1.782 14.142 c -0.064 4.722 0.358 9.446 1.459 14.005 c 1.066 4.563 2.826 8.961 5.336 12.919 c 2.514 3.958 5.832 7.409 9.752 10.205 c -4.348 -2.074 -8.171 -5.352 -11.041 -9.325 c -2.902 -3.966 -4.846 -8.582 -5.991 -13.336 c -1.111 -4.77 -1.457 -9.695 -1.068 -14.542 C 7.184 46.955 8.253 42.161 10.138 37.73 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(63,64,66); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 78.862 51.27 c 1.094 -4.683 1.698 -9.414 1.782 -14.142 c 0.064 -4.722 -0.358 -9.446 -1.459 -14.005 c -1.066 -4.563 -2.826 -8.961 -5.336 -12.919 C 71.335 6.247 68.018 2.796 64.097 0 c 4.348 2.074 8.171 5.352 11.041 9.325 c 2.902 3.966 4.846 8.582 5.991 13.336 c 1.111 4.77 1.457 9.695 1.068 14.542 C 81.816 42.045 80.747 46.839 78.862 51.27 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(87,89,93); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                  </g>
+                </svg>
+              </span>
+              <span class="flex flex-col items-center" x-show="currHT=='Heads'" @click="runHT()">
+
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xml:space="preserve">
+
+                  <defs>
+                  </defs>
+                  <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+                    <circle cx="45" cy="45" r="45" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,200,67); fill-rule: nonzero; opacity: 1;" transform="  matrix(1 0 0 1 0 0) " />
+                    <circle cx="45" cy="45" r="35" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(211,135,0); fill-rule: nonzero; opacity: 1;" transform="  matrix(1 0 0 1 0 0) " />
+                    <path d="M 59.148 70 c -1.657 0 -3 -1.343 -3 -3 c 0 -6.147 -5.001 -11.148 -11.148 -11.148 S 33.852 60.853 33.852 67 c 0 1.657 -1.343 3 -3 3 s -3 -1.343 -3 -3 c 0 -9.456 7.693 -17.148 17.148 -17.148 c 9.456 0 17.148 7.692 17.148 17.148 C 62.148 68.657 60.806 70 59.148 70 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,200,67); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 45 46.581 c -7.329 0 -13.291 -5.962 -13.291 -13.291 S 37.671 20 45 20 c 7.328 0 13.29 5.962 13.29 13.291 S 52.328 46.581 45 46.581 z M 45 26 c -4.02 0 -7.291 3.271 -7.291 7.291 S 40.98 40.581 45 40.581 c 4.02 0 7.29 -3.271 7.29 -7.291 S 49.02 26 45 26 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,200,67); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                  </g>
+                </svg>
+                <p class="px-2 py-1 mt-1 font-bold text-white bg-blue-400 rounded-md">Heads!</p>
+              </span>
+
+              <span class="flex flex-col items-center" x-show="currHT=='Tails'" @click="runHT()">
+
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="256" height="256" viewBox="0 0 256 256" xml:space="preserve">
+
+                  <defs>
+                  </defs>
+                  <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+                    <circle cx="45.001" cy="47.211" r="42.791" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(232,129,2); fill-rule: nonzero; opacity: 1;" transform="  matrix(1 0 0 1 0 0) " />
+                    <circle cx="45" cy="42.79" r="35" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(243,158,9); fill-rule: nonzero; opacity: 1;" transform="  matrix(1 0 0 1 0 0) " />
+                    <path d="M 45 13.791 c 17.977 0 32.78 13.555 34.766 31 c 0.15 -1.313 0.234 -2.647 0.234 -4 c 0 -19.33 -15.67 -35 -35 -35 s -35 15.67 -35 35 c 0 1.353 0.085 2.687 0.234 4 C 12.22 27.346 27.023 13.791 45 13.791 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(232,129,2); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 45 0 C 21.367 0 2.209 19.158 2.209 42.791 c 0 23.633 19.158 42.791 42.791 42.791 s 42.791 -19.158 42.791 -42.791 C 87.791 19.158 68.633 0 45 0 z M 45 75.928 c -18.301 0 -33.137 -14.836 -33.137 -33.137 C 11.863 24.49 26.699 9.653 45 9.653 S 78.137 24.49 78.137 42.791 C 78.137 61.092 63.301 75.928 45 75.928 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(254,236,154); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 45 0 C 21.367 0 2.209 19.158 2.209 42.791 c 0 23.633 19.158 42.791 42.791 42.791 s 42.791 -19.158 42.791 -42.791 C 87.791 19.158 68.633 0 45 0 z M 45 75.928 c -18.301 0 -33.137 -14.836 -33.137 -33.137 C 11.863 24.49 26.699 9.653 45 9.653 S 78.137 24.49 78.137 42.791 C 78.137 61.092 63.301 75.928 45 75.928 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(253,216,53); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 83.422 23.947 l -7.339 7.339 c 1.241 3.352 1.947 6.961 2.035 10.723 l 8.623 -8.623 C 85.999 30.079 84.88 26.916 83.422 23.947 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(254,236,154); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 44.218 75.909 c -3.762 -0.087 -7.371 -0.794 -10.723 -2.035 l -7.339 7.339 c 2.969 1.459 6.132 2.578 9.439 3.32 L 44.218 75.909 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(254,236,154); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 15.236 57.365 l -7.118 7.118 c 3.188 5.408 7.526 10.054 12.685 13.598 l 6.975 -6.975 C 22.396 67.826 18.027 63.053 15.236 57.365 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(254,236,154); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 66.692 5.909 l -7.118 7.118 c 5.688 2.791 10.461 7.16 13.741 12.541 l 6.975 -6.975 C 76.745 13.435 72.1 9.097 66.692 5.909 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(254,236,154); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 49.861 10.012 c 1.441 0.212 2.849 0.522 4.223 0.913 l 7.565 -7.565 c -1.224 -0.517 -2.478 -0.976 -3.756 -1.379 L 49.861 10.012 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(254,236,154); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 5.569 59.44 l 7.565 -7.565 c -0.391 -1.374 -0.701 -2.782 -0.913 -4.223 L 4.19 55.683 C 4.593 56.962 5.052 58.216 5.569 59.44 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(254,236,154); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 61.78 27 H 28.22 c -1.657 0 -3 1.343 -3 3 s 1.343 3 3 3 H 42 v 35 c 0 1.657 1.343 3 3 3 c 1.657 0 3 -1.343 3 -3 V 33 h 13.78 c 1.657 0 3 -1.343 3 -3 S 63.437 27 61.78 27 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(232,129,2); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    <path d="M 61.78 23 H 28.22 c -1.657 0 -3 1.343 -3 3 s 1.343 3 3 3 H 42 v 35 c 0 1.657 1.343 3 3 3 c 1.657 0 3 -1.343 3 -3 V 29 h 13.78 c 1.657 0 3 -1.343 3 -3 S 63.437 23 61.78 23 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(253,216,53); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                  </g>
+                </svg>
+                <p class="px-2 py-1 mt-1 font-bold text-white bg-indigo-400 rounded-md">Tails!</p>
+              </span>
+
+
+
+            </div>
+
+            <div class="flex flex-col items-start justify-start w-full h-fit" x-show="log_show.length>0">
+              <div>
+                <p class="m-1 text-2xl font-bold text-blue-500">Log</p>
+              </div>
+              <div class="w-48 p-2 overflow-y-scroll border-2 rounded-md resize-y scroll-smooth border-slate-400 h-28 max-h-96" id="logger">
+
+                <template x-for="(item,index) in log_show">
+                  <span class="flex items-end justify-between" :key="index" >
+
+                    <span x-text="item.r" class="font-semibold"></span>
+                    <span x-text="item.t_s" class="text-xs text-slate-600/80"></span>
+                  </span>
+
+                </template>
+              </div>
+
+            </div>
+
+            <div class="absolute inset-0 bg-orange-400" x-show="false">
+
+            </div>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function t_man(e_t) {
+      const t = new Date();
+      elapsedMilliseconds = t.getTime() - e_t;
+
+      const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
+      const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+      const elapsedHours = Math.floor(elapsedMinutes / 60);
+      const elapsedDays = Math.floor(elapsedHours / 24);
+
+      if (elapsedDays > 0) {
+        return `${elapsedDays} days ago`;
+      } else if (elapsedHours > 0) {
+        return `${elapsedHours} h ago`;
+      } else if (elapsedMinutes > 0) {
+        return `${elapsedMinutes} min ago`;
+      } else if (elapsedSeconds < 5) {
+        return `just now`;
+      } else {
+        return `${elapsedSeconds} sec ago`;
+      }
+    }
+
+    function allTabs() {
+      return {
+
+        currTab: 1,
+        currHT: "",
+        animHT: false,
+        currYN: 0,
+        animYN: false,
+        log_show: [],
+        logAll: [
+          [],
+          [],
+          []
+        ],
+        interval_t: null,
+        start_t_check() {
+          this.interval_t = setInterval(() => {
+            if (this.log_show.length > 0) {
+              this.log_show.forEach(element => {
+                element.t_s = t_man(element.t);
+              });
+            }
+          }, (5000));
+        },
+        stop_t_check() {
+          clearInterval(this.interval_t);
+          this.interval_t = null;
+        },
+        runner(re) {
+          const v = Math.floor(Math.random() * 10)
+          return (v % 2 == 0) ? re[0] : re[1];
+        },
+        scrolla() {
+          const n = this.log_show.length;
+          if (n > 0) {
+            setTimeout(() => {
+            document.getElementById('logger').scrollTo({
+              top: 200 * n,
+            })
+          }, 100)
+          }
+
+        },
+
+        runHT() {
+          if (!this.animHT) {
+
+            this.currHT = ''
+            this.animHT = true
+            setTimeout(() => {
+              this.currHT = this.runner(['Heads', "Tails"])
+              const t = new Date()
+              this.logAll[1].push({
+                "r": this.currHT,
+                "t": t.getTime(),
+                "t_s": t_man(t.getTime())
+              })
+              this.log_show = this.logAll[1]
+              this.scrolla()
+              this.animHT = false
+            }, 500)
+          }
+
+        },
+        taber(tab) {
+          this.currTab = tab
+          this.log_show = this.logAll[tab]
+            this.scrolla()
+        }
+      }
+
+    }
+  </script>
+
+</body>
+
+</html>
